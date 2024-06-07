@@ -42,6 +42,6 @@ function solution(s, skip, index) {
 
 const s = "aukks";
 const skip = "wbqd";
-const index = 5;
+let index = 5;
 
 console.log(solution(s, skip, index))

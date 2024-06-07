@@ -38,7 +38,7 @@ function solution(n, m, sections) {
     return answer;
 }
 
-const n = 8;
+let n = 8;
 const m = 4	;
 const sections = [2, 3, 6]	;
 
