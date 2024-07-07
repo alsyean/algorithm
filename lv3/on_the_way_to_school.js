@@ -10,6 +10,28 @@
 
  */
 function solution(m, n, puddles) {
-    let answer = 0;
-    return answer;
+    const MOD = 1000000007;
+
+    let memo = Array.from( { length: n}, () => Array(m).fill(-1));
+
+    const puddleSet = new Set(puddles.map(p => `${p[1] - 1},${p[0] - 1}`));
+
+    function dfs(x, y) {
+        if ( x >= n || y >= m || puddleSet.has(`${x},${y}`) ) return 0;
+
+        if ( x === n - 1 && y === m - 1) return  1;
+
+        if ( memo[x][y] !== -1 ) return  memo[x][y];
+
+        memo[x][y] = (dfs(x+1,y) + dfs(x,y+1)) % MOD;
+        return memo[x][y];
+    }
+
+    return dfs(0, 0);
 }
+
+const n = 3;
+const m = 4;
+const puddles = [[2, 2]];
+
+console.log(solution(n,m,puddles));
