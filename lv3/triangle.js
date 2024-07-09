@@ -6,23 +6,41 @@
  */
 
 function solution(triangle) {
-    const dp = Array.from({ length: triangle.length }, (_, i) => Array(triangle[i].length).fill(0));
+    const dp = Array.from({ length: triangle.length }, (_, i) => Array(triangle[i].length).fill(-1));
 
-    dp[0][0] = triangle[0][0];
+    // dp[0][0] = triangle[0][0];
 
-    for(let i = 1; i < triangle.length; i++ ){
-        for(let j = 0; j < triangle[i].length; j++ ){
-            if ( j === 0 ) {
-                dp[i][j] = dp[i-1][j] + triangle[i][j];
-            } else if ( j === triangle[i].length -1 ) {
-                dp[i][j] = dp[i-1][j-1] + triangle[i][j];
-            } else {
-                dp[i][j] = Math.max(dp[i-1][j-1], dp[i-1][j] ) + triangle[i][j];
-            }
+    // for(let i = 1; i < triangle.length; i++ ){
+    //     for(let j = 0; j < triangle[i].length; j++ ){
+    //         if ( j === 0 ) {
+    //             dp[i][j] = dp[i-1][j] + triangle[i][j];
+    //         } else if ( j === triangle[i].length -1 ) {
+    //             dp[i][j] = dp[i-1][j-1] + triangle[i][j];
+    //         } else {
+    //             dp[i][j] = Math.max(dp[i-1][j-1], dp[i-1][j] ) + triangle[i][j];
+    //         }
+    //     }
+    // }
+
+    function findMaxPath(row,col) {
+        if ( row === triangle.length - 1 ) {
+          return triangle[row][col]
         }
+
+        if (dp[row][col] !== -1) {
+            return dp[row][col];
+        }
+
+        let left = findMaxPath(row+1, col);
+        let right = findMaxPath(row+1, col+1);
+
+        dp[row][col] = Math.max(left, right) + triangle[row][col];
+
+        return dp[row][col]
+
     }
 
-    return Math.max(...dp[triangle.length - 1]);
+    return findMaxPath(0,0)
 }
 
 let triangle = [
